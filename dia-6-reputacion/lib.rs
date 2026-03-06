@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("5ktee6vdNAh8RFmtN6A5kV1GshvUEGtiFrtG4ZyJfAyc");
+declare_id!("2kf8vCVDB6NiFHYenKHKDha6Rncu3phJ5njcRd6Pm1n3");
 
 #[program]
 pub mod reputacion {
@@ -12,7 +12,6 @@ pub mod reputacion {
         perfil.autoridad = ctx.accounts.usuario.key();
         perfil.nombre = nombre.clone();
         perfil.puntos = 0;
-        perfil.bump = ctx.bumps.perfil_usuario;
         msg!("Usuario registrado: {}", nombre);
         Ok(())
     }
@@ -45,14 +44,11 @@ pub mod reputacion {
 }
 
 #[derive(Accounts)]
-#[instruction(nombre: String)]
 pub struct RegistrarUsuario<'info> {
     #[account(
         init,
         payer = usuario,
-        space = 8 + 32 + 4 + 32 + 8 + 4 + 64 + 1,
-        seeds = [b"perfil", usuario.key().as_ref()],
-        bump
+        space = 8 + 32 + 4 + 32 + 8 + 4 + 64,
     )]
     pub perfil_usuario: Account<'info, PerfilUsuario>,
     #[account(mut)]
@@ -62,21 +58,13 @@ pub struct RegistrarUsuario<'info> {
 
 #[derive(Accounts)]
 pub struct GestionarPuntos<'info> {
-    #[account(
-        mut,
-        seeds = [b"perfil", perfil_usuario.autoridad.as_ref()],
-        bump = perfil_usuario.bump
-    )]
+    #[account(mut)]
     pub perfil_usuario: Account<'info, PerfilUsuario>,
     pub usuario: Signer<'info>,
 }
 
 #[derive(Accounts)]
 pub struct ConsultarReputacion<'info> {
-    #[account(
-        seeds = [b"perfil", perfil_usuario.autoridad.as_ref()],
-        bump = perfil_usuario.bump
-    )]
     pub perfil_usuario: Account<'info, PerfilUsuario>,
 }
 
@@ -85,7 +73,6 @@ pub struct PerfilUsuario {
     pub autoridad: Pubkey,
     pub nombre: String,
     pub puntos: u64,
-    pub bump: u8,
 }
 
 #[error_code]
