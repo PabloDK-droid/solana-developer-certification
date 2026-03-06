@@ -27,5 +27,5 @@ Mi proyecto Final de Solana
 De que trata: Sistema de Reputación
 Programa para Solana usando Anchor que permite registrar usuarios con perfiles on-chain, otorgar o quitar puntos de reputación y consultar la reputación de cualquier wallet
 
-Program ID: 5ktee6vdNAh8RFmtN6A5kV1GshvUEGtiFrtG4ZyJfAyc
+Program ID: GBwyAo9XeXTWPkwLVsmAqc84jjEr2ZWYg9dvKrvH7grh
 Red: Devnet
