@@ -88,3 +88,4 @@ pub enum ErrorReputacion {
     #[msg("Overflow en puntos")]
     Overflow,
 }
+
